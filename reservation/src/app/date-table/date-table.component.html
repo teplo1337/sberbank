@@ -1,0 +1,31 @@
+<p>
+  date: {{selectedDate}}
+</p>
+<div class="content" *ngIf="selectedDate && room">
+  <table class="time-table">
+      <tr class="time-cell">
+          <th>time</th>
+      </tr>
+    <tr class="time-cell" *ngFor="let time of times">
+      <th>{{time}}</th>
+    </tr>
+  </table>
+
+  <table  class="event-table">
+    <tr class="event-cell">
+      <th>{{room.name}}</th>
+    </tr>
+    <tr class="event-cell" *ngFor="let time of room.times">
+      <td [class.busy]="time.busy" (click)="selectRoom(time)">{{time.title}}</td> 
+    </tr>
+  </table>
+  <table  class="event-table">
+      <tr class="event-cell">
+        <th>{{room2.name}}</th>
+      </tr>
+      <tr class="event-cell" *ngFor="let time of room2.times">
+        <td [class.busy]="time.busy" (click)="selectRoom(time)">{{time.title}}</td> 
+      </tr>
+    </table>    
+</div>
+<app-date-editor [event]="selectedEvent"></app-date-editor>

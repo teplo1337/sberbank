@@ -1,7 +1,7 @@
 {
   "name": "notable",
   "version": "1.0.0",
-  "description": "task-manager",
+  "description": "reserver-room",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js"

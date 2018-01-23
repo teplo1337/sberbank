@@ -1,0 +1,44 @@
+@color-cell_border: rgb(185, 185, 185);
+@color-busy: lighten(tomato, 10%);
+@color-free: rgb(180, 255, 180);
+
+th {
+    border: 1px solid @color-cell_border;
+}
+
+td {
+    border: 1px solid @color-cell_border;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+}
+.time-table {
+    width: 3rem;
+}
+
+td.busy {
+    background-color: @color-busy !important;
+}
+
+.event-cell > td {
+    background-color: @color-free;
+}
+
+.time-cell {
+    width: 3rem;
+    height: 2rem;
+}
+
+.time-cell > th { 
+    border-right: 0px;
+}
+
+.event-cell {
+    height: 2rem;
+}
+
+.content {
+    display: flex;
+}
