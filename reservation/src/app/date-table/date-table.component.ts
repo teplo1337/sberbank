@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ReservationService } from '../reservation.service';
-import { Event } from '../event';
+import { Event } from '../data-model';
 import { Room, Time } from './room';
 
 @Component({
@@ -16,6 +16,7 @@ export class DateTableComponent implements OnInit {
   room: Room;
   room2: Room;
   selectedEvent: Event;
+  showEditor: boolean;
 
   @Input()
     set selectedDate(value: string) {
@@ -138,6 +139,7 @@ export class DateTableComponent implements OnInit {
     this.selectedEvent.who = '';
     this.selectedEvent.title = '';
     this.selectedEvent.roomName = time.roomName;
+    this.showEditor = true;
   }
 }
 

@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, Pipe, PipeTransform} from '@angular/core';
-import { Event } from '../event';
+import { Component, OnInit, Input, Output, Pipe, ViewChildren, PipeTransform} from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Event } from '../data-model';
 
 @Component({
   selector: 'app-date-editor',
@@ -9,21 +10,19 @@ import { Event } from '../event';
 @Pipe({name: 'exponentialStrength'})
 
 export class DateEditorComponent implements OnInit, PipeTransform {
-  private _event: Event;
-  startTime: string [];
-  endTime: string[];
-
-  transform(value: number, exponent: string): string {
-    return 'kaka';
-  }
 
   @Input()
     set event(value: Event) {
+      this._event = void 0;
       if (value && value._id) {
+
+      this.createForm(this.fb, value);
         this.editEvent(value);
 
       } else if (value) {
-        this.createEvent(value);
+
+      this.createForm(this.fb, value);
+      this.createEvent(value);
 
       }
       this._event = value;
@@ -33,8 +32,29 @@ export class DateEditorComponent implements OnInit, PipeTransform {
       return this._event;
     }
 
+  @ViewChildren('select') selectors;
 
-  constructor() { }
+  private _event: Event;
+  startTime: string [];
+  endTime: string[];
+  editorForm: FormGroup;
+  errorTime: boolean;
+
+  transform(value: number, exponent: string): string {
+    return 'kaka';
+  }
+
+  constructor(private fb: FormBuilder) {
+  }
+
+  createForm(fb: FormBuilder, value: Event) {
+    this.editorForm = fb.group({
+      inputs: fb.group({
+        who: [value.who, Validators.required],
+        title: [value.title, Validators.required],
+      }),
+    });
+  }
 
   ngOnInit() {
     this.startTime = this.getTimes(false);
@@ -63,5 +83,23 @@ export class DateEditorComponent implements OnInit, PipeTransform {
       }
     }
     return times;
+  }
+  checkDateValid (): boolean {
+    if (this.editorForm.valid) {
+      const selectedStartTime = this.selectors.toArray()[0].nativeElement.value;
+      const selectedEndTime = this.selectors.toArray()[1].nativeElement.value;
+      if (selectedEndTime - selectedStartTime >= 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+  onSubmit() {
+    if (this.checkDateValid ()) {
+      this.errorTime = false;
+      console.log('ok');
+    } else {
+      this.errorTime = true;
+    }
   }
 }

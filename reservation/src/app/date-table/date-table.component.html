@@ -36,4 +36,4 @@
   </table> 
 
 </div>
-<app-date-editor [event]="selectedEvent"></app-date-editor>
+<app-date-editor *ngIf="showEditor" [event]="selectedEvent"></app-date-editor>

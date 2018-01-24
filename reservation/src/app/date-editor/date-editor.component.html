@@ -1,12 +1,11 @@
-<div id="main">
-  <form>
-    <div class="content" *ngIf="event"> 
-      <div class="block">
+<div id="main" *ngIf="event">
+  <form [formGroup]="editorForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="content"> 
+      <div class="block" >
 
         <div>
           <label>С </label>
-
-            <select id="startDate">
+            <select #select id="startDate" (change)="errorTime=false">
 
               <option 
               *ngFor="let time of startTime; let i = index" 
@@ -25,32 +24,31 @@
         <div>     
           <label>до </label>
 
-          <select id="endDate">
+          <select #select id="endDate" (change)="errorTime=false">
 
             <option 
-              *ngFor="let time of endTime; let i = index" 
-              value="{{i}}" 
-              [selected]="event.end_time === i">
+              *ngFor="let time of endTime; let z = index" 
+              value="{{z}}" 
+              [selected]="event.end_time === z">
               {{time}}
             </option>
             
           </select> 
         </div>
       </div>
-      <div>
-        <div class="block">
+      <p id="error" *ngIf="errorTime">Не верно запланировано время события!</p>
+      <div formGroupName="inputs">
+        <div class="block" >
           <label>Ваше имя: </label> 
-          <input type="text" placeholder="Иванов Иван Иванович" [ngModel]="event.who">
+          <input type="text" placeholder="Иванов Иван Иванович" formControlName="who">
         </div>
         <div class="block">
             <label>Название события: </label> 
-            <input type="text" placeholder="Переговоры" [ngModel]="event.title">
+            <input type="text" placeholder="Переговоры" formControlName="title">
         </div>
 
       </div>
-      <div id="button">
-          Создать
-      </div>
+      <button id="button" type="submit" [disabled]="!editorForm.valid">Создать</button>    
     </div>
   </form>
 </div>
