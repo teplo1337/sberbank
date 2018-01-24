@@ -11,23 +11,22 @@ import { Room, Time } from './room';
 export class DateTableComponent implements OnInit {
   private _selectedDate: string;
   events: Event [];
+
   startTime: string [];
   endTime: string [];
+
   room: Room;
   room2: Room;
+
   selectedEvent: Event;
+  showTable: boolean;
   showEditor: boolean;
 
   @Input()
     set selectedDate(value: string) {
       if (value) {
         this._selectedDate = value;
-        this.getEvents().then(() => {
-          this.startTime = this.getTimes(false);
-          this.endTime = this.getTimes(true);
-          this.room = this.getRoom(0, 'room one');
-          this.room2 = this.getRoom(1, 'room two');
-        });
+        this.initComponent();       
       }
     }
     get selectedDate(): string {
@@ -38,6 +37,17 @@ export class DateTableComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  initComponent () {
+    this.getEvents().then(() => {
+      this.startTime = this.getTimes(false);
+      this.endTime = this.getTimes(true);
+      this.room = this.getRoom(0, 'комната 1');
+      this.room2 = this.getRoom(1, 'комната 2');
+      this.showTable = true;
+      this.showEditor = false;
+    });
   }
 
   getEvents() {
@@ -107,6 +117,7 @@ export class DateTableComponent implements OnInit {
         const duration = indexEnd - indexStart;
 
         for (let i = 0; i < duration; i++) {
+          times[indexStart + i].endTime = event.end_time;
           times[indexStart + i].busy = true;
           times[indexStart + i].event_id = event._id;
           times[indexStart + i].title = event.title;
@@ -118,19 +129,28 @@ export class DateTableComponent implements OnInit {
   }
 
   selectRoom(time: Time) {
+    console.log(time);
     if (time.event_id) {
-      this.selectedEvent = this.events.filter((event: Event): Event => {
-        if (event._id === time.event_id) {
-          event.roomName = time.roomName;
-          return event;
-        }
-      }).pop();
+      this.editEvent(time);
     } else {
-      this.createNewEvent(time);
+      this.editNewEvent(time);
     }
   }
 
-  createNewEvent(time: Time) {
+  editEvent(time: Time) {
+    console.log('edit');
+    this.selectedEvent = new Event;
+    this.selectedEvent = this.events.filter((event: Event): Event => {
+      if (event._id === time.event_id) {
+        event.roomName = time.roomName;
+        return event;
+      }
+    }).pop();
+    this.showTable = false;
+    this.showEditor = true;
+  }
+
+  editNewEvent(time: Time) {
     this.selectedEvent = new Event;
     this.selectedEvent.room_id = time.roomId;
     this.selectedEvent.start_time = time.startTime;
@@ -139,7 +159,25 @@ export class DateTableComponent implements OnInit {
     this.selectedEvent.who = '';
     this.selectedEvent.title = '';
     this.selectedEvent.roomName = time.roomName;
+    this.showTable = false;
     this.showEditor = true;
+  }
+
+  createEvent(event: Event) {
+    console.log('create');
+  }
+
+  modifyEveny(event: Event) {
+    console.log('modify');
+  }
+
+  deleteEvent(event: Event) {
+    console.log('delete');
+  }
+
+  backToTable(event: Event) {
+    this.selectedDate = event.day;
+    this.showEditor = false;
   }
 }
 

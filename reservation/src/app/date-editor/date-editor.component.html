@@ -1,54 +1,79 @@
 <div id="main" *ngIf="event">
-  <form [formGroup]="editorForm" (ngSubmit)="onSubmit()" novalidate>
+  <form #editorForm="ngForm" (ngSubmit)="onSubmit(editorForm)" novalidate>
     <div class="content"> 
-      <div class="block" >
+      <div class="block"> 
+        <div class="buffer">
+          <button 
+          id="back"
+          (click)="moveBack()">
+          Назад</button>    </div>
+        <div>
+          <label>"{{event.roomName}}" </label> 
+        </div>  
+        <div class="buffer">
+          <label *ngIf="event._id" id="edit" (click)="changeEditPrivilege()">&#9998;</label> 
+          <label *ngIf="event._id" id="delete"(click)="deleteEvent()">&#10006;</label> 
+        </div>
+      </div>
+      <div class="block">
 
         <div>
           <label>С </label>
-            <select #select id="startDate" (change)="errorTime=false">
-
-              <option 
-              *ngFor="let time of startTime; let i = index" 
-                value="{{i}}"
-                [selected]="event.start_time === i">
-                {{time}}
-              </option>
-
-            </select>
-          </div>
-
-        <div>
-          <label>комната: "{{event.roomName}}"</label> 
-        </div> 
-
+          <select #select id="startDate" (change)="errorTime=false"
+          [disabled]="noEditPrivilege"
+          required>
+            <option 
+             *ngFor="let time of startTime; let i = index" 
+              value="{{i}}"
+              [selected]="event.start_time === i">
+              {{time}}
+            </option>
+          </select>
+        </div>
         <div>     
           <label>до </label>
-
-          <select #select id="endDate" (change)="errorTime=false">
-
+          <select #select id="endDate" (change)="errorTime=false"
+           [disabled]="noEditPrivilege"
+           required>
+  
             <option 
               *ngFor="let time of endTime; let z = index" 
               value="{{z}}" 
               [selected]="event.end_time === z">
               {{time}}
             </option>
-            
+           
           </select> 
-        </div>
+        </div>     
       </div>
       <p id="error" *ngIf="errorTime">Не верно запланировано время события!</p>
-      <div formGroupName="inputs">
+      <div>
         <div class="block" >
           <label>Ваше имя: </label> 
-          <input type="text" placeholder="Иванов Иван Иванович" formControlName="who">
+          <input 
+            type="text"
+            required
+            [(ngModel)]="event.who"
+            name="who"
+            placeholder="Иванов Иван Иванович"
+            [disabled]="noEditPrivilege">
         </div>
         <div class="block">
-            <label>Название события: </label> 
-            <input type="text" placeholder="Переговоры" formControlName="title">
+          <label>Название события: </label> 
+          <input 
+            type="text"
+            required
+            [(ngModel)]="event.title"
+            name="title"
+            placeholder="Переговоры"
+            [disabled]="noEditPrivilege">
         </div>
 
       </div>
-      <button id="button" type="submit" [disabled]="!editorForm.valid">Создать</button>    
+      <button 
+        id="button" 
+        type="submit" 
+        [disabled]="!editorForm.valid">{{buttonText}}</button>    
     </div>
   </form>
 </div>

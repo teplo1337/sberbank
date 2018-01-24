@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, Pipe, ViewChildren, PipeTransform} from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, Input, Output, Pipe, EventEmitter, ViewChildren, PipeTransform} from '@angular/core';
 import { Event } from '../data-model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-date-editor',
@@ -14,17 +14,16 @@ export class DateEditorComponent implements OnInit, PipeTransform {
   @Input()
     set event(value: Event) {
       this._event = void 0;
-      if (value && value._id) {
+      this.errorTime = void 0;
 
-      this.createForm(this.fb, value);
+      if (value && value._id) {
         this.editEvent(value);
 
       } else if (value) {
-
-      this.createForm(this.fb, value);
-      this.createEvent(value);
+        this.createEvent(value);
 
       }
+      console.log(value);
       this._event = value;
     }
 
@@ -32,28 +31,25 @@ export class DateEditorComponent implements OnInit, PipeTransform {
       return this._event;
     }
 
+  @Output() create = new EventEmitter<Event>();
+  @Output() modify = new EventEmitter<Event>();
+  @Output() delete = new EventEmitter<Event>();
+  @Output() back = new EventEmitter<Event>();
   @ViewChildren('select') selectors;
 
   private _event: Event;
+  buttonText: string;
+
   startTime: string [];
   endTime: string[];
-  editorForm: FormGroup;
+  noEditPrivilege = true;
   errorTime: boolean;
 
   transform(value: number, exponent: string): string {
     return 'kaka';
   }
 
-  constructor(private fb: FormBuilder) {
-  }
-
-  createForm(fb: FormBuilder, value: Event) {
-    this.editorForm = fb.group({
-      inputs: fb.group({
-        who: [value.who, Validators.required],
-        title: [value.title, Validators.required],
-      }),
-    });
+  constructor() {
   }
 
   ngOnInit() {
@@ -62,11 +58,17 @@ export class DateEditorComponent implements OnInit, PipeTransform {
   }
 
   editEvent (value: Event) {
-    console.log(value);
+
+    console.log('edit');
+    this.noEditPrivilege = true;
+    this.buttonText = 'Изменить';
   }
 
   createEvent (value: Event) {
-    console.log(value);
+
+    console.log('create');
+    this.noEditPrivilege = false;
+    this.buttonText = 'Создать';
   }
 
   getTimes(value: boolean): string [] {
@@ -84,22 +86,43 @@ export class DateEditorComponent implements OnInit, PipeTransform {
     }
     return times;
   }
-  checkDateValid (): boolean {
-    if (this.editorForm.valid) {
-      const selectedStartTime = this.selectors.toArray()[0].nativeElement.value;
-      const selectedEndTime = this.selectors.toArray()[1].nativeElement.value;
+  checkDateValid (value: boolean): boolean {
+    if (value) {
+      const selectedStartTime = Number(this.selectors.toArray()[0].nativeElement.value);
+      const selectedEndTime = Number(this.selectors.toArray()[1].nativeElement.value);
       if (selectedEndTime - selectedStartTime >= 0) {
         return true;
       }
     }
     return false;
   }
-  onSubmit() {
-    if (this.checkDateValid ()) {
-      this.errorTime = false;
-      console.log('ok');
+  onSubmit(form: NgForm) {
+    if (this.checkDateValid (form.valid)) {
+      this.event.who = '';
+      this.event.title = '';
+      this.event.start_time = Number(this.selectors.toArray()[0].nativeElement.value);
+      this.event.end_time = Number(this.selectors.toArray()[1].nativeElement.value);
+
+      if (this._event._id) {
+        this.modify.emit(this.event);
+      } else {
+        this.create.emit(this.event);
+      }
     } else {
       this.errorTime = true;
     }
   }
+
+  changeEditPrivilege () {
+    this.noEditPrivilege = false;
+  }
+
+  moveBack () {
+    this.back.emit(this.event);
+  }
+
+  deleteEvent () {
+    this.delete.emit(this.event);
+  }
+
 }

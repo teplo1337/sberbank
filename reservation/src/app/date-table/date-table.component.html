@@ -1,4 +1,6 @@
-<div class="content" *ngIf="selectedDate && room">    
+
+<p *ngIf="showTable">Выберите комнату и начальное время</p>   
+<div class="content" *ngIf="showTable">
   <table class="time-table-start">
     <tr class="time-cell-start">
       <th>Начало</th>
@@ -36,4 +38,11 @@
   </table> 
 
 </div>
-<app-date-editor *ngIf="showEditor" [event]="selectedEvent"></app-date-editor>
+<app-date-editor 
+  *ngIf="showEditor" 
+  [event]="selectedEvent"
+  (create)="createEvent($event)"
+  (modify)="modifyEveny($event)"
+  (delete)="deleteEvent($event)"
+  (back)="backToTable($event)"
+  ></app-date-editor>

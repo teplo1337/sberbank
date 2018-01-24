@@ -8,14 +8,18 @@
     flex-direction: column;
     justify-content: center;
     justify-self: center;
-    margin-top: 10px;
     max-width: 500px;
+    padding:0px 20px 20px 20px;
+    border: 1px solid black;
 }
 .block {
     margin-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+.buffer {
+    width: 40px;
 }
 #button {
     margin-top:10px;
@@ -31,9 +35,38 @@
         border: 1px solid lighten(@color-button-disabled, 10%);
     }
 }
-
+#back {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: @color-button;
+    color: white;
+    border: 1px solid lighten(@color-button, 10%);
+    border-radius: 3px;
+}
 input {
     text-align: center;
+    &[disabled] {
+        color: black;
+        padding: 2px;
+        margin: 1px 1px 1px 1px;
+        background-image: none;
+        background-color: white;
+        border: 0px;
+    }
+}
+select[disabled] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+
+    color: black;
+    padding: 2px;
+    margin: 1px 1px 1px 1px;
+    background-image: none;
+    background-color: white;
+    border: 0px;
 }
 #main {
     display: flex;
