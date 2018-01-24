@@ -9,4 +9,5 @@ export class Time {
     title: string;
     event_id: string;
     startTime: number;
+    roomName: string;
 }

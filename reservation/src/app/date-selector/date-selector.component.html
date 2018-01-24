@@ -1,2 +1,12 @@
-<input #date type="date" value="{{selectedDate}}" (input)="checkDate($event.target.value)"> <input type="button" (click)="checkDate(date.value)" value="OK">
+<div class="data-selector">
+    <input 
+        #date type="date" 
+        value="{{selectedDate}}" 
+        (input)="checkDate($event.target.value)"> 
+    <input 
+        id="button"
+        type="button" 
+        (click)="checkDate(date.value)" 
+        value="OK">
+</div>
 <p>{{error}}</p>

@@ -1,0 +1,35 @@
+
+@color-button: royalblue;
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-self: center;
+    margin-top: 10px;
+    max-width: 500px;
+}
+.block {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#button {
+    margin-top:10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: @color-button;
+    color: white;
+    border: 1px solid lighten(@color-button, 10%);
+    border-radius: 3px;
+}
+
+input {
+    text-align: center;
+}
+#main {
+    display: flex;
+    justify-content: center;
+}

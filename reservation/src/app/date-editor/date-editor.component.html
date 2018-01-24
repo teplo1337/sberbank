@@ -1,3 +1,56 @@
-<div *ngIf="event"> 
-  <div></div>
+<div id="main">
+  <form>
+    <div class="content" *ngIf="event"> 
+      <div class="block">
+
+        <div>
+          <label>С </label>
+
+            <select id="startDate">
+
+              <option 
+              *ngFor="let time of startTime; let i = index" 
+                value="{{i}}"
+                [selected]="event.start_time === i">
+                {{time}}
+              </option>
+
+            </select>
+          </div>
+
+        <div>
+          <label>комната: "{{event.roomName}}"</label> 
+        </div> 
+
+        <div>     
+          <label>до </label>
+
+          <select id="endDate">
+
+            <option 
+              *ngFor="let time of endTime; let i = index" 
+              value="{{i}}" 
+              [selected]="event.end_time === i">
+              {{time}}
+            </option>
+            
+          </select> 
+        </div>
+      </div>
+      <div>
+        <div class="block">
+          <label>Ваше имя: </label> 
+          <input type="text" placeholder="Иванов Иван Иванович" [ngModel]="event.who">
+        </div>
+        <div class="block">
+            <label>Название события: </label> 
+            <input type="text" placeholder="Переговоры" [ngModel]="event.title">
+        </div>
+
+      </div>
+      <div id="button">
+          Создать
+      </div>
+    </div>
+  </form>
 </div>

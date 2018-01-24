@@ -6,4 +6,5 @@ export class Event {
     who: string;
     start_time: number;
     end_time: number;
+    roomName: string;
 }

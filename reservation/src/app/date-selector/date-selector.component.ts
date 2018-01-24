@@ -30,7 +30,7 @@ export class DateSelectorComponent implements OnInit {
     }
   }
 
-  validate(value) {
+  validate(value): boolean {
     if (isNaN((new Date(value)).getTime())) {
       return false;
 

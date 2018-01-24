@@ -1,17 +1,14 @@
-<p>
-  date: {{selectedDate}}
-</p>
-<div class="content" *ngIf="selectedDate && room">
-  <table class="time-table">
-      <tr class="time-cell">
-          <th>time</th>
-      </tr>
-    <tr class="time-cell" *ngFor="let time of times">
+<div class="content" *ngIf="selectedDate && room">    
+  <table class="time-table-start">
+    <tr class="time-cell-start">
+      <th>Начало</th>
+    </tr>
+    <tr class="time-cell-start" *ngFor="let time of startTime">
       <th>{{time}}</th>
     </tr>
   </table>
 
-  <table  class="event-table">
+  <table class="event-table">
     <tr class="event-cell">
       <th>{{room.name}}</th>
     </tr>
@@ -19,13 +16,24 @@
       <td [class.busy]="time.busy" (click)="selectRoom(time)">{{time.title}}</td> 
     </tr>
   </table>
-  <table  class="event-table">
-      <tr class="event-cell">
-        <th>{{room2.name}}</th>
-      </tr>
-      <tr class="event-cell" *ngFor="let time of room2.times">
-        <td [class.busy]="time.busy" (click)="selectRoom(time)">{{time.title}}</td> 
-      </tr>
-    </table>    
+
+  <table class="event-table">
+    <tr class="event-cell">
+      <th>{{room2.name}}</th>
+    </tr>
+    <tr class="event-cell" *ngFor="let time of room2.times">
+      <td [class.busy]="time.busy" (click)="selectRoom(time)">{{time.title}}</td> 
+    </tr>
+   </table>
+
+  <table class="time-table-end">
+    <tr class="time-cell-end">
+      <th>Конец</th>
+    </tr>
+    <tr class="time-cell-end" *ngFor="let time of endTime">
+      <th>{{time}}</th>
+    </tr>
+  </table> 
+
 </div>
 <app-date-editor [event]="selectedEvent"></app-date-editor>
