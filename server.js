@@ -26,14 +26,19 @@ let router = (app, db) => {
 
     /* get day data */
 
-    app.get('/api/', (req, res) => {       
-        collection.find(
-            {
-                "day": req.query.day
-            }        
-        ).toArray((err, result) => {
-            (err) ? res.status(500).send(err) : res.status(200).send(result);
-        });
+    app.get('/api/', (req, res) => {  
+        if (req.query.day) {
+            collection.find(
+                {
+                    "day": req.query.day
+                }        
+            ).toArray((err, result) => {
+                (err) ? res.status(500).send(err) : res.status(200).send(result);
+            });
+        } else {
+            res.status(500).send('err');
+        } 
+
     });
 
     /* insert new day */
@@ -85,49 +90,71 @@ let router = (app, db) => {
         });
    
     });
+
+    app.get('/api/:id', (req, res) => { 
+        if (req.params.id) {    
+            collection.findOne(
+                {
+                    "rooms": req.params.id
+                },        
+            (err, result) => {
+                (err) ? res.status(500).send(err) : res.status(200).send(result);
+            });
+        } else {
+            res.status(500).send('error');
+        }
+    });
     
     app.delete('/api/:id', (req, res) => {
-        collection.remove({_id: new mongodb.ObjectID(req.params.id)}, (err, result) => {
-            (err) ? res.status(500).send(err) : res.status(200).send(result);
-        });
+        if (req.params.id) {
+            collection.remove({_id: new mongodb.ObjectID(req.params.id)}, (err, result) => {
+                (err) ? res.status(500).send(err) : res.status(200).send(result);
+            });
+        } else {
+            res.status(500).send('error');
+        }
+        
     });
     
     /* check selected tiems in db  */
 
-    let checkTimes = (body) => {
+    let checkTimes = (body) => {        
         return new Promise ((resolve, reject) => {
-            let allowedDates = body.allowedDates;
-            /* edit */
-            if (body._id) {  
-                console.log(allowedDates);
-                collection.findOne(
-                    {_id: new mongodb.ObjectID(body._id)},      
-                        (err, result) => {
+            if (!body.allowedDates) {
+                resolve(false);
+            } else {
+                let allowedDates = body.allowedDates;
+                /* edit */
+                if (body._id) {  
+                    collection.findOne(
+                        {_id: new mongodb.ObjectID(body._id)},      
+                            (err, result) => {
 
-                    for(let i = result.start_time; i <= result.end_time; i++) {
-                        allowedDates[i] = true;
-                    }
-                    console.log(allowedDates);
-        
+                        for(let i = result.start_time; i <= result.end_time; i++) {
+                            allowedDates[i] = true;
+                        }
+            
+                        if (check(body, allowedDates)) {
+                            resolve(true);
+
+                        } else {
+                            resolve(false);
+                        }
+                    });           
+
+                } else {
+
+                    /* create */
+                    
                     if (check(body, allowedDates)) {
                         resolve(true);
 
                     } else {
                         resolve(false);
                     }
-                });           
-
-            } else {
-
-                 /* create */
-                
-                 if (check(body, allowedDates)) {
-                    resolve(true);
-
-                } else {
-                    resolve(false);
                 }
-            }
+
+            }          
             
         });
     }
