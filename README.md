@@ -2,7 +2,7 @@
 # Angular: http://sber.kekcheburek.ru/
 # Node Server: http://sber.kekcheburek.ru/api
 
-app.component => reservation\src\app\ <br>
+app.component => reservation\src\app\app <br>
 date-selector.component => reservation\src\app\date-selector <br>
 date-editor.component => reservation\src\app\date-editor <br>
 date-table.component => reservation\src\app\date-table <br>
