@@ -3,18 +3,7 @@
 @color-free: rgb(180, 255, 180);
 @color-theme: lighten(royalblue, 30%);
 
-th {
-    border: 1px solid @color-cell_border;
-    width: 4rem;
-    height: 2.5rem;
-    max-width: 7rem;
-    min-width: 4rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-td {
+td, th {
     border: 1px solid @color-cell_border;
     text-align: center;
     width: 4rem;
@@ -24,6 +13,7 @@ td {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    padding: 1px 10px 0px 10px;
 }
 
 table {
