@@ -23,7 +23,6 @@ export class DateEditorComponent implements OnInit {
         this.createMode(value);
 
       }
-      console.log(value);
       this._event = value;
     }
 
@@ -59,15 +58,11 @@ export class DateEditorComponent implements OnInit {
   }
 
   editMode (value: Event) {
-
-    console.log('edit');
     this.noEditPrivilege = true;
     this.buttonText = 'Изменить';
   }
 
   createMode (value: Event) {
-
-    console.log('create');
     this.noEditPrivilege = false;
     this.buttonText = 'Создать';
   }
@@ -91,15 +86,6 @@ export class DateEditorComponent implements OnInit {
     if (value) {
       const selectedStartTime = Number(this.selectors.toArray()[0].nativeElement.value);
       const selectedEndTime = Number(this.selectors.toArray()[1].nativeElement.value);
-      /* const duration = selectedEndTime - selectedStartTime;
-      for(let i = selectedStartTime; i <= selectedEndTime; i++) {
-        console.log(i);
-        if (!this.event.allowedDates[i]) {
-          this.errorTimeAllow = true;
-          return false;
-        }
-      }
-      */
       if (selectedEndTime - selectedStartTime >= 0) {
         return true;
       }

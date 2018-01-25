@@ -1,41 +1,43 @@
 
 <p *ngIf="showTable">Выберите комнату и начальное время</p>   
 <div class="content" *ngIf="showTable">
-  <table class="time-table-start">
-    <tr class="time-cell-start">
-      <th>Начало</th>
-    </tr>
-    <tr class="time-cell-start" *ngFor="let time of startTime">
-      <th>{{time}}</th>
-    </tr>
-  </table>
+  <div class="box">
+    <table class="time-table-start">
+      <tr class="time-cell-start">
+        <th>Начало</th>
+      </tr>
+      <tr class="time-cell-start" *ngFor="let time of startTime">
+        <th>{{time}}</th>
+      </tr>
+    </table>
 
-  <table class="event-table">
-    <tr class="event-cell">
-      <th>{{rooms[0].name}}</th>
-    </tr>
-    <tr class="event-cell" *ngFor="let time of rooms[0].times">
-      <td [class.busy]="time.busy" (click)="selectRoom(time)">{{time.title}}</td> 
-    </tr>
-  </table>
+    <table class="event-table">
+      <tr class="event-cell">
+        <th>{{rooms[0].name}}</th>
+      </tr>
+      <tr class="event-cell" *ngFor="let time of rooms[0].times">
+        <td [class.busy]="time.busy" (click)="selectRoom(time)">{{time.title}}</td> 
+      </tr>
+    </table>
 
-  <table class="event-table">
-    <tr class="event-cell">
-      <th>{{rooms[1].name}}</th>
-    </tr>
-    <tr class="event-cell" *ngFor="let time of rooms[1].times">
-      <td [class.busy]="time.busy" (click)="selectRoom(time)">{{time.title}}</td> 
-    </tr>
-   </table>
+    <table class="event-table">
+      <tr class="event-cell">
+        <th>{{rooms[1].name}}</th>
+      </tr>
+      <tr class="event-cell" *ngFor="let time of rooms[1].times">
+        <td [class.busy]="time.busy" (click)="selectRoom(time)">{{time.title}}</td> 
+      </tr>
+    </table>
 
-  <table class="time-table-end">
-    <tr class="time-cell-end">
-      <th>Конец</th>
-    </tr>
-    <tr class="time-cell-end" *ngFor="let time of endTime">
-      <th>{{time}}</th>
-    </tr>
-  </table> 
+    <table class="time-table-end">
+      <tr class="time-cell-end">
+        <th>Конец</th>
+      </tr>
+      <tr class="time-cell-end" *ngFor="let time of endTime">
+        <th>{{time}}</th>
+      </tr>
+    </table> 
+  </div>
 </div>
 <app-date-editor 
   *ngIf="showEditor" 
