@@ -2,15 +2,40 @@
 # Angular: http://sber.kekcheburek.ru/
 # Node Server: http://sber.kekcheburek.ru/api
 
-app.component => reservation\src\app\<br>
+app.component => reservation\src\app\ <br>
 date-selector.component => reservation\src\app\date-selector <br>
 date-editor.component => reservation\src\app\date-editor <br>
 date-table.component => reservation\src\app\date-table <br>
 
 service      => reservation\src\app\reservation.service <br>
 node-server  => server.js <br>
-mongodb      => 'mongodb://root:1@ds046667.mlab.com:46667/room-reservation';
- <br>
+mongodb      => 'mongodb://root:1@ds046667.mlab.com:46667/room-reservation'; <br>
+db.collection data 
+```
+{
+    "_id": {
+        "$oid": "5a69ba75f36d286a1cb3360f"
+    },
+    "rooms": "rooms",
+    "data": [
+        "Комната 1",
+        "Комната 2",
+        "Комната 3"
+    ]
+}
+
+{
+    "_id": {
+        "$oid": "5a69810480d6ed2d4ced0f15"
+    },
+    "day": "2018-01-25",
+    "title": "Слушать Грефа",
+    "room_id": 0,
+    "who": "Отдел кадров",
+    "start_time": 12,
+    "end_time": 23
+}
+```
 
 nginx conf:
 ```
