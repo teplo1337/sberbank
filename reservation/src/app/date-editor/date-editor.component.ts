@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, Pipe, EventEmitter, ViewChildren, PipeTransform} from '@angular/core';
+import { Component, OnInit, Input, Output, Pipe, EventEmitter, ViewChildren, } from '@angular/core';
 import { Event } from '../data-model';
 import { NgForm } from '@angular/forms';
 import { ReservationService } from '../reservation.service';
@@ -8,9 +8,8 @@ import { ReservationService } from '../reservation.service';
   templateUrl: './date-editor.component.html',
   styleUrls: ['./date-editor.component.less']
 })
-@Pipe({name: 'exponentialStrength'})
 
-export class DateEditorComponent implements OnInit, PipeTransform {
+export class DateEditorComponent implements OnInit {
 
   @Input()
     set event(value: Event) {
@@ -50,10 +49,6 @@ export class DateEditorComponent implements OnInit, PipeTransform {
   errorTime: boolean;
   errorTimeAllow: boolean;
   errorDelete: boolean;
-
-  transform(value: number, exponent: string): string {
-    return 'kaka';
-  }
 
   constructor(private reservationService: ReservationService) {
   }
