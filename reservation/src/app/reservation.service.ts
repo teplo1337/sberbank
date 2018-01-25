@@ -13,20 +13,20 @@ export class ReservationService {
   }
 
   newEvent(event: Event) {
-    console.log(event);
     return this.http.post('/api', event);
   }
 
   modifyEvent(event: Event) {
-    console.log(event);
     return this.http.put('/api', event);
   }
 
   deleteEvent(event: Event) {
-
     return this.http.delete('/api/' + event._id);
   }
 
+  getRooms() {
+    return this.http.get('/api/' + 'rooms');
+  }
 
   constructor(private http: HttpClient) { }
 

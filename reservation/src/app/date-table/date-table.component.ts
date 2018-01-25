@@ -39,16 +39,40 @@ export class DateTableComponent implements OnInit {
   }
 
   initComponent () {
-    this.getEvents().then(() => {
-      this.rooms = [];
+    this.getEvents().then( async () => {
+      this.rooms = await this.getRooms();
+
       this.startTime = this.getTimes(false);
       this.endTime = this.getTimes(true);
 
-      this.rooms.push(this.getRoom(0, 'комната 1'));
-      this.rooms.push(this.getRoom(1, 'комната 2'));
-      console.log(this.rooms);
       this.showTable = true;
       this.showEditor = false;
+    });
+  }
+
+  getRooms(): Promise<Room []> {
+    return new Promise ((resolve) => {
+      this.reservationService.getRooms().subscribe(
+        (result: any) => {
+          const rooms: Room [] = [];
+
+          result.data.forEach((room, index) => {
+            let temp: Room = {
+              name: room,
+              times: [],
+              id: index
+            };
+            temp = this.getRoom(temp.id, temp.name);
+            rooms.push(temp);
+          });
+
+          resolve(rooms);
+        },
+        (err) => {
+          resolve(err);
+          console.log(err);
+        }
+      );
     });
   }
 
@@ -56,11 +80,11 @@ export class DateTableComponent implements OnInit {
     return new Promise ((resolve) => {
       this.reservationService.getAllEvents(this.selectedDate).subscribe(
         (result: Event []) => {
-         this.events = result;
-         resolve(true);
+          this.events = result;
+          resolve(true);
         },
         (err) => {
-          resolve(true);
+          resolve(false);
           console.log(err);
         }
       );
@@ -130,7 +154,6 @@ export class DateTableComponent implements OnInit {
   }
 
   selectRoom(time: Time) {
-    console.log(time);
     if (time.event_id) {
       this.editEvent(time);
     } else {
@@ -139,7 +162,6 @@ export class DateTableComponent implements OnInit {
   }
 
   editEvent(time: Time) {
-    console.log('edit');
     this.selectedEvent = new Event;
     this.selectedEvent = this.events.filter((event: Event): Event => {
       if (event._id === time.event_id) {
@@ -166,11 +188,8 @@ export class DateTableComponent implements OnInit {
     this.showTable = false;
     this.showEditor = true;
   }
- /* */
+
   genAllowDates (id: number): boolean [] {
-
-    console.log('ok');
-
     const dates: boolean [] = [];
     this.rooms[id].times.forEach((time: Time) => {
       if (!time.busy) {
@@ -179,7 +198,6 @@ export class DateTableComponent implements OnInit {
         dates.push(false);
       }
     });
-    console.log(dates);
     return dates;
   }
 

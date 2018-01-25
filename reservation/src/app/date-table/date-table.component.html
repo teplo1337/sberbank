@@ -11,20 +11,11 @@
       </tr>
     </table>
 
-    <table class="event-table">
+    <table class="event-table" *ngFor="let room of rooms">
       <tr class="event-cell">
-        <th>{{rooms[0].name}}</th>
+        <th>{{room.name}}</th>
       </tr>
-      <tr class="event-cell" *ngFor="let time of rooms[0].times">
-        <td [class.busy]="time.busy" (click)="selectRoom(time)">{{time.title}}</td> 
-      </tr>
-    </table>
-
-    <table class="event-table">
-      <tr class="event-cell">
-        <th>{{rooms[1].name}}</th>
-      </tr>
-      <tr class="event-cell" *ngFor="let time of rooms[1].times">
+      <tr class="event-cell" *ngFor="let time of room.times">
         <td [class.busy]="time.busy" (click)="selectRoom(time)">{{time.title}}</td> 
       </tr>
     </table>
