@@ -97,7 +97,8 @@ let router = (app, db) => {
     let checkTimes = (body) => {
         return new Promise ((resolve, reject) => {
             let allowedDates = body.allowedDates;
-            if (body._id) {  //edit
+            /* edit */
+            if (body._id) {  
                 console.log(allowedDates);
                 collection.findOne(
                     {_id: new mongodb.ObjectID(body._id)},      
@@ -109,16 +110,19 @@ let router = (app, db) => {
                     console.log(allowedDates);
         
                     if (check(body, allowedDates)) {
-                        resolve(false);
+                        resolve(true);
 
                     } else {
                         resolve(false);
                     }
                 });           
 
-            } else {  //create
-                if (check(body, allowedDates)) {
-                    resolve(false);
+            } else {
+
+                 /* create */
+                
+                 if (check(body, allowedDates)) {
+                    resolve(true);
 
                 } else {
                     resolve(false);
