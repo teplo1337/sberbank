@@ -10,33 +10,34 @@
     justify-content: center;
     justify-self: center;
     max-width: 500px;
-    padding:0px 20px 20px 20px;
+    padding: 0px 20px 20px 20px;
     border: 1px solid black;
 }
+
 .block {
     margin-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
+
 .buffer {
-    width: 40px;
+    width: 60px;
 }
+
 #button {
     margin-top:10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    background-color: @color-button;
-    color: white;
-    border: 1px solid lighten(@color-button, 10%);
-    border-radius: 3px;
+    .button-theme;
     &[disabled] {
         background-color: @color-button-disabled;
         border: 1px solid lighten(@color-button-disabled, 10%);
     }
 }
+
 #back {
+    .button-theme 
+}
+.button-theme {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -45,23 +46,22 @@
     border: 1px solid lighten(@color-button, 10%);
     border-radius: 3px;
 }
+
 input {
     text-align: center;
     &[disabled] {
-        color: black;
-        padding: 2px;
-        margin: 1px 1px 1px 1px;
-        background-image: none;
-        background-color: white;
-        border: 0px;
+        .disabled-like-theme;
     }
 }
+
 select[disabled] {
     -webkit-appearance: none;
     -moz-appearance: none;
     text-indent: 1px;
     text-overflow: '';
-
+    .disabled-like-theme;
+}
+.disabled-like-theme {
     color: black;
     padding: 2px;
     margin: 1px 1px 1px 1px;
@@ -69,17 +69,55 @@ select[disabled] {
     background-color: white;
     border: 0px;
 }
+
 #main {
     display: flex;
     justify-content: center;
 }
-.error {
+
+.error, .success {
     text-align: center;
     background-color: @color-error;
     border: 1px solid lighten(@color-error, 10%);
 }
-.success {
-    text-align: center;
-    background-color: @color-success;
-    border: 1px solid lighten(@color-success, 10%);
+
+#delete {    
+    margin-left: 12px;
+    padding: 0px;
+    .mobile-ico-theme;
+}
+
+#edit {
+    padding: 0px;
+    .mobile-ico-theme;
+}
+
+.mobile-ico-theme {
+    border: 0px;
+    border-radius: 0px;
+    color: rgb(0, 0, 0);
+    background: white;
+}
+
+
+@media screen and (min-device-width: 800px) {
+    
+    #delete {    
+        margin-left: 12px;
+        padding: 0px 0.2rem 0 0.2rem;
+        .ico-theme;
+    }
+    
+    #edit {
+        padding: 0px 0.1rem 0px 0.1rem;
+        .ico-theme;
+    }
+    
+    .ico-theme {
+        border: 1px solid lighten(@color-button, 10%);
+        border-radius: 10px;
+        color: white;
+        background: @color-button;
+    }
+
 }

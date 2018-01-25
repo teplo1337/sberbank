@@ -130,7 +130,7 @@ export class DateEditorComponent implements OnInit {
       (result: any) => {
         if (result.insertedCount === 1) {
           this.success = true;
-          setTimeout(() => this.moveBack(), 2000);
+          setTimeout(() => this.moveBack(), 1500);
         }
         console.log(result);
       },
@@ -144,7 +144,7 @@ export class DateEditorComponent implements OnInit {
     this.reservationService.modifyEvent(event).subscribe(
       (result) => {
         this.success = true;
-        setTimeout(() => this.moveBack(), 2000);
+        setTimeout(() => this.moveBack(), 1500);
         console.log(result);
       },
       (err) => {
@@ -158,7 +158,7 @@ export class DateEditorComponent implements OnInit {
     this.reservationService.deleteEvent(this.event).subscribe(
       (result) => {
         this.success = true;
-        setTimeout(() => this.moveBack(), 2000);
+        setTimeout(() => this.moveBack(), 1500);
         console.log(result);
       },
       (err) => {
