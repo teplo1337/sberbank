@@ -15,8 +15,7 @@ export class DateTableComponent implements OnInit {
   startTime: string [];
   endTime: string [];
 
-  room: Room;
-  room2: Room;
+  rooms: Room [] = [];
 
   selectedEvent: Event;
   showTable: boolean;
@@ -26,7 +25,7 @@ export class DateTableComponent implements OnInit {
     set selectedDate(value: string) {
       if (value) {
         this._selectedDate = value;
-        this.initComponent();       
+        this.initComponent();
       }
     }
     get selectedDate(): string {
@@ -41,10 +40,13 @@ export class DateTableComponent implements OnInit {
 
   initComponent () {
     this.getEvents().then(() => {
+      this.rooms = [];
       this.startTime = this.getTimes(false);
       this.endTime = this.getTimes(true);
-      this.room = this.getRoom(0, 'комната 1');
-      this.room2 = this.getRoom(1, 'комната 2');
+
+      this.rooms.push(this.getRoom(0, 'комната 1'));
+      this.rooms.push(this.getRoom(1, 'комната 2'));
+      console.log(this.rooms);
       this.showTable = true;
       this.showEditor = false;
     });
@@ -116,7 +118,7 @@ export class DateTableComponent implements OnInit {
         const indexEnd = event.end_time;
         const duration = indexEnd - indexStart;
 
-        for (let i = 0; i < duration; i++) {
+        for (let i = 0; i <= duration; i++) {
           times[indexStart + i].endTime = event.end_time;
           times[indexStart + i].busy = true;
           times[indexStart + i].event_id = event._id;
@@ -124,7 +126,6 @@ export class DateTableComponent implements OnInit {
         }
       }
     });
-    console.log(times);
     return times;
   }
 
@@ -146,11 +147,13 @@ export class DateTableComponent implements OnInit {
         return event;
       }
     }).pop();
+    this.selectedEvent.allowedDates = this.genAllowDates(this.selectedEvent.room_id);
     this.showTable = false;
     this.showEditor = true;
   }
 
   editNewEvent(time: Time) {
+    this.selectedEvent = void 0;
     this.selectedEvent = new Event;
     this.selectedEvent.room_id = time.roomId;
     this.selectedEvent.start_time = time.startTime;
@@ -159,23 +162,30 @@ export class DateTableComponent implements OnInit {
     this.selectedEvent.who = '';
     this.selectedEvent.title = '';
     this.selectedEvent.roomName = time.roomName;
+    this.selectedEvent.allowedDates = this.genAllowDates(this.selectedEvent.room_id);
     this.showTable = false;
     this.showEditor = true;
   }
+ /* */
+  genAllowDates (id: number): boolean [] {
 
-  createEvent(event: Event) {
-    console.log('create');
-  }
+    console.log('ok');
 
-  modifyEveny(event: Event) {
-    console.log('modify');
-  }
-
-  deleteEvent(event: Event) {
-    console.log('delete');
+    const dates: boolean [] = [];
+    this.rooms[id].times.forEach((time: Time) => {
+      if (!time.busy) {
+        dates.push(true);
+      } else {
+        dates.push(false);
+      }
+    });
+    console.log(dates);
+    return dates;
   }
 
   backToTable(event: Event) {
+    this.rooms = [];
+    this.initComponent();
     this.selectedDate = event.day;
     this.showEditor = false;
   }

@@ -12,18 +12,18 @@
 
   <table class="event-table">
     <tr class="event-cell">
-      <th>{{room.name}}</th>
+      <th>{{rooms[0].name}}</th>
     </tr>
-    <tr class="event-cell" *ngFor="let time of room.times">
+    <tr class="event-cell" *ngFor="let time of rooms[0].times">
       <td [class.busy]="time.busy" (click)="selectRoom(time)">{{time.title}}</td> 
     </tr>
   </table>
 
   <table class="event-table">
     <tr class="event-cell">
-      <th>{{room2.name}}</th>
+      <th>{{rooms[1].name}}</th>
     </tr>
-    <tr class="event-cell" *ngFor="let time of room2.times">
+    <tr class="event-cell" *ngFor="let time of rooms[1].times">
       <td [class.busy]="time.busy" (click)="selectRoom(time)">{{time.title}}</td> 
     </tr>
    </table>
@@ -36,13 +36,9 @@
       <th>{{time}}</th>
     </tr>
   </table> 
-
 </div>
 <app-date-editor 
   *ngIf="showEditor" 
   [event]="selectedEvent"
-  (create)="createEvent($event)"
-  (modify)="modifyEveny($event)"
-  (delete)="deleteEvent($event)"
   (back)="backToTable($event)"
   ></app-date-editor>

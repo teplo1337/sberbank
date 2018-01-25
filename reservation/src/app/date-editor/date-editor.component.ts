@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, Pipe, EventEmitter, ViewChildren, PipeTransform} from '@angular/core';
 import { Event } from '../data-model';
 import { NgForm } from '@angular/forms';
+import { ReservationService } from '../reservation.service';
 
 @Component({
   selector: 'app-date-editor',
@@ -17,10 +18,10 @@ export class DateEditorComponent implements OnInit, PipeTransform {
       this.errorTime = void 0;
 
       if (value && value._id) {
-        this.editEvent(value);
+        this.editMode(value);
 
       } else if (value) {
-        this.createEvent(value);
+        this.createMode(value);
 
       }
       console.log(value);
@@ -42,14 +43,19 @@ export class DateEditorComponent implements OnInit, PipeTransform {
 
   startTime: string [];
   endTime: string[];
+
   noEditPrivilege = true;
+
+  success: boolean;
   errorTime: boolean;
+  errorTimeAllow: boolean;
+  errorDelete: boolean;
 
   transform(value: number, exponent: string): string {
     return 'kaka';
   }
 
-  constructor() {
+  constructor(private reservationService: ReservationService) {
   }
 
   ngOnInit() {
@@ -57,14 +63,14 @@ export class DateEditorComponent implements OnInit, PipeTransform {
     this.endTime = this.getTimes(true);
   }
 
-  editEvent (value: Event) {
+  editMode (value: Event) {
 
     console.log('edit');
     this.noEditPrivilege = true;
     this.buttonText = 'Изменить';
   }
 
-  createEvent (value: Event) {
+  createMode (value: Event) {
 
     console.log('create');
     this.noEditPrivilege = false;
@@ -90,30 +96,46 @@ export class DateEditorComponent implements OnInit, PipeTransform {
     if (value) {
       const selectedStartTime = Number(this.selectors.toArray()[0].nativeElement.value);
       const selectedEndTime = Number(this.selectors.toArray()[1].nativeElement.value);
+      /* const duration = selectedEndTime - selectedStartTime;
+      for(let i = selectedStartTime; i <= selectedEndTime; i++) {
+        console.log(i);
+        if (!this.event.allowedDates[i]) {
+          this.errorTimeAllow = true;
+          return false;
+        }
+      }
+      */
       if (selectedEndTime - selectedStartTime >= 0) {
         return true;
       }
     }
     return false;
   }
+
+  deleteErrors () {
+    this.errorTime = false;
+    this.errorTimeAllow = false;
+    this.errorDelete = false;
+  }
+
   onSubmit(form: NgForm) {
+    this.deleteErrors ();
     if (this.checkDateValid (form.valid)) {
-      this.event.who = '';
-      this.event.title = '';
+
       this.event.start_time = Number(this.selectors.toArray()[0].nativeElement.value);
       this.event.end_time = Number(this.selectors.toArray()[1].nativeElement.value);
 
       if (this._event._id) {
-        this.modify.emit(this.event);
+        this.modifyEvent(this.event);
       } else {
-        this.create.emit(this.event);
+        this.createEvent(this.event);
       }
     } else {
       this.errorTime = true;
     }
   }
 
-  changeEditPrivilege () {
+  clickEdit () {
     this.noEditPrivilege = false;
   }
 
@@ -121,8 +143,47 @@ export class DateEditorComponent implements OnInit, PipeTransform {
     this.back.emit(this.event);
   }
 
-  deleteEvent () {
-    this.delete.emit(this.event);
+  createEvent (event: Event) {
+
+    this.reservationService.newEvent(event).subscribe(
+      (result: any) => {
+        if (result.insertedCount === 1) {
+          this.success = true;
+          setTimeout(() => this.moveBack(), 2000);
+        }
+        console.log(result);
+      },
+      (err) => {
+        this.errorTimeAllow = true;
+        console.log(err);
+    });
+  }
+
+  modifyEvent (event: Event) {
+    this.reservationService.modifyEvent(event).subscribe(
+      (result) => {
+        this.success = true;
+        setTimeout(() => this.moveBack(), 2000);
+        console.log(result);
+      },
+      (err) => {
+        this.errorTimeAllow = true;
+
+        console.log(err);
+    });
+  }
+
+  deleteEvent() {
+    this.reservationService.deleteEvent(this.event).subscribe(
+      (result) => {
+        this.success = true;
+        setTimeout(() => this.moveBack(), 2000);
+        console.log(result);
+      },
+      (err) => {
+        this.errorDelete = true;
+        console.log(err);
+    });
   }
 
 }

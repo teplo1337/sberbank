@@ -27,12 +27,11 @@ let router = (app, db) => {
     /* get day data */
 
     app.get('/api/', (req, res) => {       
-        console.log(req.query.day) 
         collection.find(
             {
                 "day": req.query.day
             }        
-        ).toArray(function(err, result) {
+        ).toArray((err, result) => {
             (err) ? res.status(500).send(err) : res.status(200).send(result);
         });
     });
@@ -40,16 +39,22 @@ let router = (app, db) => {
     /* insert new day */
 
     app.post('/api/', parseJson, (req, res) => {
-        const day = {
-            "day": req.body.day,
-            "title": req.body.title,
-            "room_id": req.body.room_id,
-            "who": req.body.who,
-            "start_time": req.body.start_time,
-            "end_time": req.body.end_time
-        };
-        collection.insert(day, function(err, result) {
-            (err) ? res.status(500).send(err) : res.status(200).send(result);
+        checkTimes(req.body).then((value) => { 
+            if (value) {
+                const day = {
+                    "day": req.body.day,
+                    "title": req.body.title,
+                    "room_id": req.body.room_id,
+                    "who": req.body.who,
+                    "start_time": req.body.start_time,
+                    "end_time": req.body.end_time
+                };
+                collection.insert(day, (err, result) => {
+                    (err) ? res.status(500).send(err) : res.status(200).send(result);
+                });
+            } else {
+                res.status(500).end();
+            }
         });
     });
 
@@ -57,24 +62,28 @@ let router = (app, db) => {
         or edit old data       */
 
     app.put('/api/', parseJson, (req, res) => {
-        collection.update(
-            {
-                _id: new mongodb.ObjectID(req.params.id)
-            },
-            { $set: 
-                { 
-                    "day": req.body.day,
-                    "title": req.body.title,
-                    "room_id": req.body.room_id,
-                    "who": req.body.who,
-                    "start_time": req.body.start_time,
-                    "end_time": req.body.end_time
-                    
-                }
+        checkTimes(req.body).then((value) => { 
+            if (value) {
+                collection.update(
+                    {_id: new mongodb.ObjectID(req.body._id)},
+                    { 
+                        $set: { 
+                            "day": req.body.day,
+                            "title": req.body.title,
+                            "room_id": req.body.room_id,
+                            "who": req.body.who,
+                            "start_time": req.body.start_time,
+                            "end_time": req.body.end_time                            
+                        }
+                    }
+                ,(err, result) => {
+                    (err) ? res.status(500).send(err) : res.status(200).send(result);
+                });
+            } else {
+                res.status(500).end();
             }
-          ,(err, result) => {
-            (err) ? res.status(500).send(err) : res.status(200).send(result);
-          });
+        });
+   
     });
     
     app.delete('/api/:id', (req, res) => {
@@ -82,7 +91,54 @@ let router = (app, db) => {
             (err) ? res.status(500).send(err) : res.status(200).send(result);
         });
     });
+    
+    /* check selected tiems in db  */
+
+    let checkTimes = (body) => {
+        return new Promise ((resolve, reject) => {
+            let allowedDates = body.allowedDates;
+            if (body._id) {  //edit
+                console.log(allowedDates);
+                collection.findOne(
+                    {_id: new mongodb.ObjectID(body._id)},      
+                        (err, result) => {
+
+                    for(let i = result.start_time; i <= result.end_time; i++) {
+                        allowedDates[i] = true;
+                    }
+                    console.log(allowedDates);
+        
+                    if (check(body, allowedDates)) {
+                        resolve(false);
+
+                    } else {
+                        resolve(false);
+                    }
+                });           
+
+            } else {  //create
+                if (check(body, allowedDates)) {
+                    resolve(false);
+
+                } else {
+                    resolve(false);
+                }
+            }
+            
+        });
+    }
 }
+
+let check = (body, allowedDates) => {
+    let check = true;
+    for(let i = body.start_time; i <= body.end_time; i++) {
+        if (!allowedDates[i]) {
+            check = false;
+        }
+    }
+    return check;
+}
+
 
 /* db connect */
 
@@ -92,7 +148,7 @@ mongoClient.connect(dbUri, (err, db) => {
 
 /* start server */
 
-app.listen(8890, function () {
+app.listen(8890, () => {
     console.log('listen 8890'+ ' at ' + date.now());
 
 });

@@ -2,6 +2,7 @@
 @color-button: royalblue;
 @color-button-disabled: #9397a5;
 @color-error: lighten(tomato, 15%);
+@color-success: rgb(180, 255, 180);
 
 .content {
     display: flex;
@@ -72,8 +73,13 @@ select[disabled] {
     display: flex;
     justify-content: center;
 }
-#error {
+.error {
     text-align: center;
     background-color: @color-error;
     border: 1px solid lighten(@color-error, 10%);
+}
+.success {
+    text-align: center;
+    background-color: @color-success;
+    border: 1px solid lighten(@color-success, 10%);
 }

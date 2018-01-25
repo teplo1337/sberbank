@@ -11,7 +11,7 @@
           <label>"{{event.roomName}}" </label> 
         </div>  
         <div class="buffer">
-          <label *ngIf="event._id" id="edit" (click)="changeEditPrivilege()">&#9998;</label> 
+          <label *ngIf="event._id" id="edit" (click)="clickEdit()">&#9998;</label> 
           <label *ngIf="event._id" id="delete"(click)="deleteEvent()">&#10006;</label> 
         </div>
       </div>
@@ -19,7 +19,7 @@
 
         <div>
           <label>С </label>
-          <select #select id="startDate" (change)="errorTime=false"
+          <select #select id="startDate" (change)="deleteErrors()"
           [disabled]="noEditPrivilege"
           required>
             <option 
@@ -32,7 +32,7 @@
         </div>
         <div>     
           <label>до </label>
-          <select #select id="endDate" (change)="errorTime=false"
+          <select #select id="endDate" (change)="deleteErrors()"
            [disabled]="noEditPrivilege"
            required>
   
@@ -46,7 +46,10 @@
           </select> 
         </div>     
       </div>
-      <p id="error" *ngIf="errorTime">Не верно запланировано время события!</p>
+      <p class="error" *ngIf="errorTime">Не корректное время события!</p>
+      <p class="error" *ngIf="errorTimeAllow">К сожалению в это время комната занята!</p>
+      <p class="error" *ngIf="errorDelete">Событие не найдено!!</p>
+      <p class="success" *ngIf="success">Успех: операция успешно завершена!</p>
       <div>
         <div class="block" >
           <label>Ваше имя: </label> 
@@ -68,7 +71,6 @@
             placeholder="Переговоры"
             [disabled]="noEditPrivilege">
         </div>
-
       </div>
       <button 
         id="button" 

@@ -7,6 +7,7 @@ export class Event {
     start_time: number;
     end_time: number;
     roomName: string;
+    allowedDates: boolean [];
 }
 
 export class Room {

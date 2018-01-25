@@ -42,4 +42,5 @@ export class DateSelectorComponent implements OnInit {
   initError (text) {
     this.error = text;
   }
+
 }
