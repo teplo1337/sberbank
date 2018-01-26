@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ReservationService } from '../reservation.service';
-import { Event } from '../data-model';
-import { Room, Time } from './room';
+import { Event, Room, Time  } from '../data-model';
 
 @Component({
   selector: 'app-date-table',
@@ -16,8 +15,8 @@ export class DateTableComponent implements OnInit {
   endTime: string [];
 
   rooms: Room [] = [];
-
   selectedEvent: Event;
+
   showTable: boolean;
   showEditor: boolean;
 
@@ -122,7 +121,6 @@ export class DateTableComponent implements OnInit {
 
       for (let j = 0; j < 2; j++) {
         const time = new Time;
-
         time.busy = false;
         time.title = null;
 
@@ -175,16 +173,18 @@ export class DateTableComponent implements OnInit {
   }
 
   editNewEvent(time: Time) {
-    this.selectedEvent = void 0;
-    this.selectedEvent = new Event;
-    this.selectedEvent.room_id = time.roomId;
-    this.selectedEvent.start_time = time.startTime;
-    this.selectedEvent.day = this.selectedDate;
-    this.selectedEvent.end_time = time.startTime;
-    this.selectedEvent.who = '';
-    this.selectedEvent.title = '';
-    this.selectedEvent.roomName = time.roomName;
-    this.selectedEvent.allowedDates = this.genAllowDates(this.selectedEvent.room_id);
+    this.selectedEvent = {
+      room_id: time.roomId,
+      start_time: time.startTime,
+      day: this.selectedDate,
+      end_time: time.startTime,
+      who: '',
+      title: '',
+      roomName: time.roomName,
+      _id: '',
+      allowedDates: this.genAllowDates(this.selectedEvent.room_id)
+    };
+
     this.showTable = false;
     this.showEditor = true;
   }

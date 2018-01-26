@@ -15,12 +15,12 @@ export class Room {
     times: Time [];
     id: number;
 }
-
 export class Time {
     roomId: number;
     busy: boolean;
     title: string;
     event_id: string;
     startTime: number;
+    endTime: number;
     roomName: string;
 }
