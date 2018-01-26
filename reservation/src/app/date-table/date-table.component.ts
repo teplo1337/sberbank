@@ -182,7 +182,7 @@ export class DateTableComponent implements OnInit {
       title: '',
       roomName: time.roomName,
       _id: '',
-      allowedDates: this.genAllowDates(this.selectedEvent.room_id)
+      allowedDates: this.genAllowDates(time.roomId)
     };
 
     this.showTable = false;
