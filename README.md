@@ -33,7 +33,7 @@ rooms:
     "_id": {
         "$oid": "5a69ba75f36d286a1cb3360f"
     },
-    "rooms": "rooms",
+    "type": "rooms",
     "data": [
         "Комната 1",
         "Комната 2",
