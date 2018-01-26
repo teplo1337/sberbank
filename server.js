@@ -95,7 +95,7 @@ let router = (app, db) => {
         if (req.params.id) {    
             collection.findOne(
                 {
-                    "rooms": req.params.id
+                    "type": req.params.id
                 },        
             (err, result) => {
                 (err) ? res.status(500).send(err) : res.status(200).send(result);
