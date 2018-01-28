@@ -20,10 +20,13 @@ table {
 td, th {
     border: 1px solid @color-cell_border;
     text-align: center;
-    width: 4rem;
     height: 2.5rem;
-    min-width: 4rem;
+    min-width: 2rem;
     padding: 1px 10px 0px 10px;  
+}
+
+label {
+    line-height: 23px;
 }
 
 .block {
@@ -78,7 +81,9 @@ input {
 }
 
 #main {
+    flex: 1;
     display: flex;
+    overflow: auto;
     justify-content: center;
 }
 
