@@ -15,6 +15,7 @@ export class Room {
     times: Time [];
     id: number;
 }
+
 export class Time {
     roomId: number;
     busy: boolean;

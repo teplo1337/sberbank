@@ -28,11 +28,17 @@ table {
 
 td.busy {
     background-color: @color-busy !important;
+    &:hover {
+        background-color: lighten(@color-busy , 5%) !important;
+    }
 }
 
 .event-cell > td {
     background-color: @color-free;
     border-right: 0px;
+    &:hover {
+        background-color: lighten(@color-free , 5%);
+    }
 }
 .event-cell > th {
     border-right: 0px;
