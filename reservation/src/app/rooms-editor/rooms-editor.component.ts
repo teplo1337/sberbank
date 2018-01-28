@@ -69,9 +69,10 @@ export class RoomsEditorComponent implements OnInit {
 
     this.reservationService.modifyRooms(this.roomsDocument).subscribe(
       (result: RoomsDocument) => {
+        this.initComponent();
         this.success = true;
         setTimeout(() => {
-          this.initComponent();
+          this.success = false;
         }, 1500);
       },
       (err) => {

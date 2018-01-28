@@ -127,6 +127,9 @@ let router = (app, db) => {
                     }
                 }
             ,(err, result) => {
+                
+            //    collection.remove({"room.id": req.body.data.length ... }) if need;
+
                 (err) ? res.status(500).send(err) : res.status(200).send(result);
             });
         } else {
