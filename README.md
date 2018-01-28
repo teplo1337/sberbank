@@ -1,6 +1,7 @@
 # sberBank
-# Angular: http://sber.kekcheburek.ru/
-# Node Server: http://sber.kekcheburek.ru/api && ...api/rooms
+# Angular routing: http://sber.kekcheburek.ru/, http://sber.kekcheburek.ru/roomseditor
+
+# Node Server: http://sber.kekcheburek.ru/api && .../api/rooms
 
 app.component => reservation\src\app\app <br>
 date-selector.component => reservation\src\app\date-selector <br>
