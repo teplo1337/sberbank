@@ -13,7 +13,13 @@ td, th {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding: 1px 10px 0px 10px;
+    padding: 1px 10px 0px 10px;  
+}
+.room-name {
+    cursor: context-menu;
+    &:hover {
+        background-color: lighten(@color-theme, 5%);
+    }
 }
 
 table {

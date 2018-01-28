@@ -22,7 +22,7 @@ let router = (app, db) => {
     
     const collection = db.collection('days');
  
-    /* rest api */
+    /* rest api for events */
 
     /* get day data */
 
@@ -87,11 +87,23 @@ let router = (app, db) => {
             } else {
                 res.status(500).end();
             }
-        });
-   
+        });   
     });
 
-    app.get('/api/:id', (req, res) => { 
+    app.delete('/api/:id', (req, res) => {
+        if (req.params.id) {
+            collection.remove({_id: new mongodb.ObjectID(req.params.id)}, (err, result) => {
+                (err) ? res.status(500).send(err) : res.status(200).send(result);
+            });
+        } else {
+            res.status(500).send('error');
+        }
+        
+    });
+    
+    /* rest api for rooms */
+
+    app.get('/api/rooms/:id', (req, res) => { 
         if (req.params.id) {    
             collection.findOne(
                 {
@@ -104,17 +116,24 @@ let router = (app, db) => {
             res.status(500).send('error');
         }
     });
-    
-    app.delete('/api/:id', (req, res) => {
-        if (req.params.id) {
-            collection.remove({_id: new mongodb.ObjectID(req.params.id)}, (err, result) => {
+
+    app.put('/api/rooms', parseJson, (req, res) => {
+        if (req.body._id) {
+            collection.update(
+                {_id: new mongodb.ObjectID(req.body._id)},
+                { 
+                    $set: { 
+                        "data": req.body.data                            
+                    }
+                }
+            ,(err, result) => {
                 (err) ? res.status(500).send(err) : res.status(200).send(result);
             });
         } else {
-            res.status(500).send('error');
+            res.status(500).end();
         }
-        
     });
+   
     
     /* check selected tiems in db  */
 

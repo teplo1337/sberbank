@@ -13,7 +13,7 @@
 
     <table class="event-table" *ngFor="let room of rooms">
       <tr class="event-cell">
-        <th>{{room.name}}</th>
+        <th class="room-name" routerLink="/roomseditor" routerLinkActive="active" >{{room.name}}</th>
       </tr>
       <tr class="event-cell" *ngFor="let time of room.times">
         <td [class.busy]="time.busy" (click)="selectRoom(time)">{{time.title}}</td> 

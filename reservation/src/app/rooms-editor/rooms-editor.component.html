@@ -1,0 +1,68 @@
+<div id="main" *ngIf="rooms">
+  <form #roomForm="ngForm" (ngSubmit)="onSubmit(roomForm)" novalidate>
+    <div class="content"> 
+      <div class="block"> 
+        <div class="buffer">
+          <button 
+          id="back"
+          type="button"
+          routerLink="" routerLinkActive="active">
+          Назад</button>    
+        </div>
+        <div>
+          <label>Редактор комнат</label> 
+        </div>  
+        <div class="buffer">  
+        </div>
+      </div>
+      <div class="block">
+
+        <table class="rooms-table">
+          <tr class="room-cell">
+            <th>id</th>
+            <th>Название комнаты</th>
+            <th>Действие</th>
+          </tr>
+          <tr class="event-cell" *ngFor="let room of rooms; let i = index">
+            <td>{{i}}</td>
+            <td><input type="text" name="{{i}}" [(ngModel)]="room.name"></td>
+            <td>
+              <label id="delete"(click)="deleteRoom(i)">&#10006;</label> 
+            </td>
+          </tr>
+          <tr class="event-cell">
+              <td></td>
+              <td>
+                <input 
+                  type="text" 
+                  name="new" 
+                  [(ngModel)]="new.name" 
+                  placeholder="Имя новой комнаты"
+                  (click)="nameError=false">
+                  <p class="error" *ngIf="nameError">Новое имя не может быть пустым!</p>
+              </td>
+              <td>
+                <label id="plus"(click)="createRoom(new)">+</label> 
+              </td>
+            </tr>
+        </table>
+
+      </div>
+      <div class="block"> 
+          <div class="buffer">
+            <button 
+            id="back"
+            (click)="editRooms()"
+            type="button">
+            Сохранить</button>    
+          </div>   
+          <div class="buffer">  
+          </div>  
+          <div class="buffer">  
+        </div>
+      </div>
+      <label class="success" *ngIf="success">Успех: операция завершена!</label>
+      <label class="error" *ngIf="modifyError">Ошибка: неверный ответ сервера!</label>
+    </div>
+  </form>
+</div>

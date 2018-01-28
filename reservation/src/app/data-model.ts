@@ -24,3 +24,9 @@ export class Time {
     endTime: number;
     roomName: string;
 }
+
+export class RoomsDocument {
+    data: string [];
+    type: string;
+    _id: string;
+}

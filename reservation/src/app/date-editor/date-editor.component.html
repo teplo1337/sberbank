@@ -6,7 +6,8 @@
           <button 
           id="back"
           (click)="moveBack()">
-          Назад</button>    </div>
+          Назад</button>    
+        </div>
         <div>
           <label>"{{event.roomName}}" </label> 
         </div>  
@@ -47,7 +48,7 @@
         </div>     
       </div>
       <p class="error" *ngIf="errorTime">Не корректное время события!</p>
-      <p class="error" *ngIf="errorTimeAllow">К сожалению в это время комната занята!</p>
+      <p class="error" *ngIf="errorTimeAllow">К сожалению, в данный промежутов времени комната занята!</p>
       <p class="error" *ngIf="errorDelete">Событие не найдено!!</p>
       <p class="success" *ngIf="success">Успех: операция успешно завершена!</p>
       <div>

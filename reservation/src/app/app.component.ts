@@ -6,15 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit {
-  selectedDate: Date;
-
   constructor() { }
 
   ngOnInit() {
 
-  }
-
-  getDate(event) {
-    this.selectedDate = event;
   }
 }
