@@ -27,7 +27,7 @@ event:
 }
 ```
 
-rooms:
+rooms can be any number:
 ```
 {
     "_id": {
