@@ -75,6 +75,17 @@ server {
        }
     }
 ```
+## install:
+```
+git clone https://github.com/teplo1337/sberbank
+cd "_directory_"
+npm install -g @angular/cli
+npm install all
+node server
+cd reservation
+ng serve --open
+```
+
 ## test task:
 ```
 Бронирование переговорных комнат
