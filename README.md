@@ -39,7 +39,7 @@ event:
 }
 ```
 
-rooms can be any number:
+## rooms can be any number:
 ```
 {
     "_id": {
@@ -56,7 +56,7 @@ rooms can be any number:
 
 
 
-nginx conf:
+## nginx conf:
 ```
 server {
         listen       80;
@@ -75,7 +75,7 @@ server {
        }
     }
 ```
-test task:
+## test task:
 ```
 Бронирование переговорных комнат
 
