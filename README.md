@@ -1,18 +1,29 @@
-# sberBank
-# Angular routing: http://sber.kekcheburek.ru/, http://sber.kekcheburek.ru/roomseditor
+# sberbank 
 
-# Node Server: http://sber.kekcheburek.ru/api && .../api/rooms
+## Node Server: 
+```
+http://sber.kekcheburek.ru/api .../api/rooms
+```
+
+## Angular: 
+
+```
+http://sber.kekcheburek.ru/ .../roomseditor
+```
 
 app.component => reservation\src\app\app <br>
 date-selector.component => reservation\src\app\date-selector <br>
 date-editor.component => reservation\src\app\date-editor <br>
 date-table.component => reservation\src\app\date-table <br>
+rooms-editor.component => reservation\src\app\rooms-editor <br>
 
 service      => reservation\src\app\reservation.service <br>
 node-server  => server.js <br>
-mongodb      => 'mongodb://root:1@ds046667.mlab.com:46667/room-reservation'; <br>
+## mongodb:
+```
+'mongodb://root:1@ds046667.mlab.com:46667/room-reservation' <br>
 db.collection data: 
-
+```
 event:
 ```
 {
