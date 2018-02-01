@@ -1,18 +1,29 @@
-# sberBank
-# Angular routing: http://sber.kekcheburek.ru/, http://sber.kekcheburek.ru/roomseditor
+# sberbank http://sber.kekcheburek.ru
 
-# Node Server: http://sber.kekcheburek.ru/api && .../api/rooms
+## Node Server: 
+```
+http://sber.kekcheburek.ru/api .../api/rooms
+```
+
+## Angular: 
+
+```
+http://sber.kekcheburek.ru/ .../roomseditor
+```
 
 app.component => reservation\src\app\app <br>
 date-selector.component => reservation\src\app\date-selector <br>
 date-editor.component => reservation\src\app\date-editor <br>
 date-table.component => reservation\src\app\date-table <br>
+rooms-editor.component => reservation\src\app\rooms-editor <br>
 
 service      => reservation\src\app\reservation.service <br>
 node-server  => server.js <br>
-mongodb      => 'mongodb://root:1@ds046667.mlab.com:46667/room-reservation'; <br>
+## mongodb:
+```
+'mongodb://root:1@ds046667.mlab.com:46667/room-reservation' <br>
 db.collection data: 
-
+```
 event:
 ```
 {
@@ -28,7 +39,7 @@ event:
 }
 ```
 
-rooms can be any number:
+## rooms can be any number:
 ```
 {
     "_id": {
@@ -45,7 +56,7 @@ rooms can be any number:
 
 
 
-nginx conf:
+## nginx conf:
 ```
 server {
         listen       80;
@@ -64,7 +75,18 @@ server {
        }
     }
 ```
-test task:
+## install:
+```
+git clone https://github.com/teplo1337/sberbank
+cd "_directory_"
+npm install -g @angular/cli
+npm install all
+node server
+cd reservation
+ng serve --open
+```
+
+## test task:
 ```
 Бронирование переговорных комнат
 
