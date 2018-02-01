@@ -28,7 +28,7 @@ export class RoomsEditorComponent implements OnInit {
     this.nameError = false;
 
     this.rooms = await this.getRooms();
-    this.new = new Room;
+    this.new = new Room();
   }
 
   getRooms(): Promise<Array<Room>> {

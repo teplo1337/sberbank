@@ -107,7 +107,7 @@ export class DateTableComponent implements OnInit {
   }
 
   getRoom( id: number, roomName ): Room {
-    const newRoom = new Room;
+    const newRoom = new Room();
     newRoom.id = id;
     newRoom.name = roomName;
     newRoom.times = this.getRoomTimes(newRoom.id, newRoom.name);
@@ -120,7 +120,7 @@ export class DateTableComponent implements OnInit {
     for (let i = 0; i < 12; i++) {
 
       for (let j = 0; j < 2; j++) {
-        const time = new Time;
+        const time = new Time();
         time.busy = false;
         time.title = null;
 
@@ -160,7 +160,7 @@ export class DateTableComponent implements OnInit {
   }
 
   editEvent(time: Time) {
-    this.selectedEvent = new Event;
+    this.selectedEvent = new Event();
     this.selectedEvent = this.events.filter((event: Event): Event => {
       if (event._id === time.event_id) {
         event.roomName = time.roomName;
