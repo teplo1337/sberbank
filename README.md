@@ -39,7 +39,7 @@ event:
 }
 ```
 
-## rooms can be any number:
+rooms can be any number:
 ```
 {
     "_id": {
@@ -53,9 +53,6 @@ event:
     ]
 }
 ```
-
-
-
 ## nginx conf:
 ```
 server {
@@ -85,7 +82,6 @@ node server
 cd reservation
 ng serve --open
 ```
-
 ## test task:
 ```
 Бронирование переговорных комнат
