@@ -20,9 +20,9 @@ rooms-editor.component => reservation\src\app\rooms-editor <br>
 service      => reservation\src\app\reservation.service <br>
 node-server  => server.js <br>
 ## mongodb:
+address:
 ```
-'mongodb://root:1@ds046667.mlab.com:46667/room-reservation' <br>
-db.collection data: 
+'mongodb://root:1@ds046667.mlab.com:46667/room-reservation'
 ```
 event:
 ```
