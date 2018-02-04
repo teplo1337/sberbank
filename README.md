@@ -75,8 +75,6 @@ server {
 ```
 ## install:
 ```
-if you dom't use nginx change port in server.js to 4200
-
 cd "_directory_"
 git clone https://github.com/teplo1337/sberbank
 npm install -g @angular/cli
