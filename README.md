@@ -60,22 +60,23 @@ server {
         server_name  sber.kekcheburek.ru;
         index index.html;
         root sberbank/reservation/dist;
+                
         location / {
-            #proxy_pass http://192.168.1.195:4200/;
-            try_files $uri /$uri /index.html;          
-       }  
-       location = /api {
-           proxy_pass http://localhost:8890/api;
-       }
+          #proxy_pass http://192.168.1.195:4200/;
+          try_files $uri /$uri /index.html;          
+        }  
+        location = /api {
+          proxy_pass http://localhost:8890/api;
+        }
         location ^~ /api/ {
-           proxy_pass http://localhost:8890/api/;
-       }
+          proxy_pass http://localhost:8890/api/;
+        }
     }
 ```
 ## install:
 ```
-change port in server.js to 4200
-cmd:
+if you dom't use nginx change port in server.js to 4200
+
 cd "_directory_"
 git clone https://github.com/teplo1337/sberbank
 npm install -g @angular/cli
